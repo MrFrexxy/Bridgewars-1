@@ -1,8 +1,11 @@
-package bridgewars.items;
+package bridgewars.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import bridgewars.Main;
+import bridgewars.game.Game;
+import bridgewars.game.GameState;
+import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ItemBuilder;
+import bridgewars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,16 +16,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import bridgewars.Main;
-import bridgewars.game.Game;
-import bridgewars.game.GameState;
-import bridgewars.utils.Message;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class SadRoom implements Listener {
+public class SadRoom implements ISpawnableItem, Listener {
 	
 	private static List<Player> sadRoomed = new ArrayList<>();
 	
-	private Main plugin;
+	private final Main plugin;
 	
 	public SadRoom(Main plugin) {
 		Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -37,7 +39,7 @@ public class SadRoom implements Listener {
 			Player k = (Player) e.getDamager();
 			if(k.getItemInHand().getType() == Material.GHAST_TEAR
 			&& GameState.isState(GameState.ACTIVE)) {
-				if(sadRoomed.size() == 0) {
+				if(sadRoomed.isEmpty()) {
 					
 					for(int x = 0; x < 7; x++)
 						for(int y = 0; y < 7; y++)
@@ -101,7 +103,7 @@ public class SadRoom implements Listener {
 					public void run() {
 						sadRoomed.remove(p);
 						Game.spawnPlayer(p);
-						if(sadRoomed.size() == 0)
+						if(sadRoomed.isEmpty())
 							clearSadRoom();
 					}
 				}.runTaskLater(plugin, 200L);
@@ -120,7 +122,21 @@ public class SadRoom implements Listener {
 	public static void removePlayerFromSadRoom(Player p) {
 		if(sadRoomed.contains(p))
 			sadRoomed.remove(p);
-		if(sadRoomed.size() == 0)
+		if(sadRoomed.isEmpty())
 			clearSadRoom();
+	}
+
+	@Override
+	public Rarity getRarity() {
+		return Rarity.BLUE;
+	}
+
+	@Override
+	public ItemStack createItem(Player p) {
+		ItemStack depression = new ItemStack(Material.GHAST_TEAR, 1);
+		ItemBuilder.setName(depression, "&cDepression");
+		ItemBuilder.setLore(depression, Arrays.asList(Message.chat("&r&7Banishes a player to the"),
+				Message.chat("&r&7Sad Room for 15 seconds")));
+		return depression;
 	}
 }

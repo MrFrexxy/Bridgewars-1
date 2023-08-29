@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import bridgewars.item.ItemPoolManager;
+import bridgewars.item.SadRoom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -27,8 +29,6 @@ import org.bukkit.inventory.ItemStack;
 
 import bridgewars.commands.Fly;
 import bridgewars.effects.Fireworks;
-import bridgewars.items.CustomItems;
-import bridgewars.items.SadRoom;
 import bridgewars.settings.Blocks;
 import bridgewars.settings.Bows;
 import bridgewars.settings.DigWars;
@@ -41,7 +41,6 @@ import bridgewars.utils.Utils;
 
 public class Game {
 	
-	private static CustomItems items = new CustomItems();
 	private static CustomScoreboard cs = new CustomScoreboard();
 	private static HotbarLayout hotbar = new HotbarLayout();
 	
@@ -75,7 +74,7 @@ public class Game {
 		if(debugMessages)
 			p.sendMessage(Message.chat("&7Placed spawn platforms"));
 		
-		SadRoom.clearSadRoom();
+		bridgewars.item.SadRoom.clearSadRoom();
 		
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			Fly.allowFlight.remove(player);
@@ -150,7 +149,7 @@ public class Game {
 				e.printStackTrace();
 				p.sendMessage(Message.chat("&cFailed to load map \"&6" + map + "&c\""));
 			}
-			if(mapList.size() == 0) {
+			if(mapList.isEmpty()) {
 				Bukkit.broadcastMessage(Message.chat("&cThere aren't any maps in rotation!"));
 				return false;
 			}
@@ -206,21 +205,20 @@ public class Game {
 			return;
 		
 		Map<String, Integer> teamSizes = new HashMap<>();
-		List<String> options = new ArrayList<>();
-		
-		teamSizes.put("red", (cs.getTeamSize("red")));
+
+        teamSizes.put("red", (cs.getTeamSize("red")));
 		teamSizes.put("blue", (cs.getTeamSize("blue")));
 		teamSizes.put("green", (cs.getTeamSize("green")));
 		teamSizes.put("yellow", (cs.getTeamSize("yellow")));
 
-		options.addAll(teamSizes.keySet());
+        List<String> options = new ArrayList<>(teamSizes.keySet());
 		
 		int smallestTeam = Collections.min(teamSizes.values());
 		for(Entry<String,Integer> entry : teamSizes.entrySet())
 			if(smallestTeam != entry.getValue())
 				options.remove(entry.getKey());
 		
-		if(options.size() == 0)
+		if(options.isEmpty())
 			options.addAll(teamSizes.keySet());
 		cs.setTeam(p, options.get(Utils.rand(options.size())));
 	}
@@ -250,7 +248,7 @@ public class Game {
 			for(Player p : Bukkit.getOnlinePlayers()) {
 				if(p.getGameMode() != GameMode.CREATIVE
 				&& cs.hasTeam(p)) {
-					if(cs.getTeam(p) == cs.getTeam(winner))
+					if(cs.getTeam(p).equals(cs.getTeam(winner)))
 						winners.add(p);
 					if(forced)
 						p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 45.0, 0.5, 0, 10));
@@ -265,7 +263,7 @@ public class Game {
 					p.setGameMode(GameMode.ADVENTURE);
 					if(!forced) {
 						Message.sendTitle(p, Message.chat("&6&lGAME OVER"), Message.chat("&l" + cs.getTeam(winner).substring(0, 1).toUpperCase() + cs.getTeam(winner).substring(1, cs.getTeam(winner).length()) + " team wins!"), 5, 20, 5);
-						if(cs.getTeam(p) == cs.getTeam(winner))
+						if(cs.getTeam(p).equals(cs.getTeam(winner)))
 							p.playSound(p.getLocation(), Sound.LEVEL_UP, 1F, 1F);
 						else
 							p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1F, 1F);
@@ -291,8 +289,7 @@ public class Game {
 			}
 		}
 		
-		else if(winner == null)
-			Bukkit.broadcastMessage("There were no players left, so the game has ended.");
+		else Bukkit.broadcastMessage("There were no players left, so the game has ended.");
 		
 		if(!forced)
 			new Fireworks(7).runTaskTimer(Bukkit.getPluginManager().getPlugin("bridgewars"), 0L, 10L);
@@ -362,29 +359,29 @@ public class Game {
 	
 	public static void grantItems(Player p) {
 		p.getInventory().clear();
-		p.getInventory().setHelmet(items.getItem(p, "helmet"));
-		p.getInventory().setChestplate(items.getItem(p, "chestplate"));;
-		p.getInventory().setLeggings(items.getItem(p, "leggings"));;
-		p.getInventory().setBoots(items.getItem(p, "boots"));
+		p.getInventory().setHelmet(ItemPoolManager.getItem("BasicHelmet").createItem(p));
+		p.getInventory().setChestplate(ItemPoolManager.getItem("BasicChestplate").createItem(p));
+		p.getInventory().setLeggings(ItemPoolManager.getItem("BasicLeggings").createItem(p));
+		p.getInventory().setBoots(ItemPoolManager.getItem("BasicBoots").createItem(p));
 		if(Swords.isState(Swords.ENABLED))
-			p.getInventory().setItem(hotbar.getSwordSlot(p), items.getItem(p, "sword"));
+			p.getInventory().setItem(hotbar.getSwordSlot(p), ItemPoolManager.getItem("BasicSword").createItem(p));
 		if(Shears.isState(Shears.ENABLED) && !GigaDrill.getState().isEnabled())
-			p.getInventory().setItem(hotbar.getShearsSlot(p), items.getItem(p, "shears"));
+			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemPoolManager.getItem("Shears").createItem(p));
 		if(Blocks.isState(Blocks.ENABLED))
-			p.getInventory().setItem(hotbar.getWoolSlot(p), items.getItem(p, "blocks", 64));
+			p.getInventory().setItem(hotbar.getWoolSlot(p), ItemPoolManager.getItem("WoolBlocks").createItem(p));
 		
 		if(GigaDrill.isState(GigaDrill.ENABLED))
-			p.getInventory().setItem(hotbar.getShearsSlot(p), items.getItem(p, "gigashears"));
+			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemPoolManager.getItem("GigaShears").createItem(p));
 		
 		if(Bows.isState(Bows.ENABLED)) {
-			p.getInventory().addItem(items.getItem(p, "bow"));
-			p.getInventory().setItem(9, new ItemStack(Material.ARROW, 1));;
+			p.getInventory().addItem(ItemPoolManager.getItem("Bow").createItem(p));
+			p.getInventory().setItem(9, new ItemStack(Material.ARROW, 1));
 		}
 		if(DigWars.getState().isEnabled()) {
-			p.getInventory().setItem(hotbar.getAxeSlot(p), items.getItem(p, "axe"));
+			p.getInventory().setItem(hotbar.getAxeSlot(p), ItemPoolManager.getItem("Axe").createItem(p));
 			p.getInventory().setItem(hotbar.getWoodSlot(p), new ItemStack(Material.WOOD, 64));
 		}
-		p.getInventory().addItem(items.getItem(p, "be"));
+		p.getInventory().addItem(ItemPoolManager.getItem("BridgeEgg").createItem(p));
 		p.setGameMode(GameMode.SURVIVAL);
 	}
 }

@@ -38,21 +38,16 @@ public class ItemBuilder {
 	
 	public static ItemStack setUnbreakable(ItemStack item, boolean state) {
 		ItemMeta meta = item.getItemMeta();
-		if(state)
-			meta.spigot().setUnbreakable(true);
-		else
-			meta.spigot().setUnbreakable(false);
+        meta.spigot().setUnbreakable(state);
 		item.setItemMeta(meta);
 		item.setDurability((short)0);
 		return item;
 	}
 	
-	public static ItemStack setLeatherColor(Player p, ItemStack item, String s) {
-		ItemStack armorPiece = item;
-		LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+	public static void setLeatherColor(Player p, ItemStack item, String s) {
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
 		meta.setColor(getColor(cs.getTeam(p)));
-		armorPiece.setItemMeta(meta);
-		return armorPiece;
+		item.setItemMeta(meta);
 	}
 	
 	private static Color getColor(String s) {
@@ -67,5 +62,8 @@ public class ItemBuilder {
 			return Color.fromRGB(255, 255, 0);
 		}
 		return Color.fromRGB(255, 255, 255);
+	}
+	public static String getTeamName(Player p){
+		return cs.getTeam(p);
 	}
 }

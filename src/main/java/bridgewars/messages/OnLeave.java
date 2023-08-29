@@ -1,5 +1,6 @@
 package bridgewars.messages;
 
+import bridgewars.item.SadRoom;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +10,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import bridgewars.Main;
 import bridgewars.game.CustomScoreboard;
 import bridgewars.game.GameState;
-import bridgewars.items.SadRoom;
 
 public class OnLeave implements Listener {
 	
@@ -26,7 +26,7 @@ public class OnLeave implements Listener {
 		cs.resetTeam(p, false);
 		cs.removePlayerFromTimer(p);
 		SadRoom.removePlayerFromSadRoom(p);
-		if(Bukkit.getOnlinePlayers().size() == 0)
+		if(Bukkit.getOnlinePlayers().isEmpty())
 			if(GameState.isState(GameState.EDIT))
 				GameState.setState(GameState.INACTIVE);
 	}

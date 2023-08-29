@@ -1,10 +1,11 @@
-package bridgewars.items;
+package bridgewars.item;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import bridgewars.Main;
+import bridgewars.game.CustomScoreboard;
+import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ItemBuilder;
+import bridgewars.utils.Message;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,15 +16,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import bridgewars.Main;
-import bridgewars.game.CustomScoreboard;
-import bridgewars.utils.Message;
+import java.util.Arrays;
 
-public class PortableDoinkHut implements Listener {
+public class PortableDoinkHut implements ISpawnableItem, Listener {
 	
 	private CustomScoreboard cs = new CustomScoreboard();
 	
-	public PortableDoinkHut (Main plugin) {
+	public PortableDoinkHut(Main plugin) {
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -118,5 +117,19 @@ public class PortableDoinkHut implements Listener {
 			}
 		}
 		return value;
+	}
+
+	@Override
+	public Rarity getRarity() {
+		return Rarity.WHITE;
+	}
+
+	@Override
+	public ItemStack createItem(Player p) {
+		ItemStack portableDoinkHut = new ItemStack(Material.MOB_SPAWNER, 1);
+		ItemBuilder.setName(portableDoinkHut, "&fPortable Doink Hut");
+		ItemBuilder.setLore(portableDoinkHut, Arrays.asList(Message.chat("&r&7Builds an instant house"),
+				Message.chat("&r&7where you're standing")));
+		return portableDoinkHut;
 	}
 }

@@ -1,17 +1,15 @@
 package bridgewars.utils;
 
+import bridgewars.item.ItemPoolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 
-import bridgewars.items.CustomItems;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class World {
-
-	private static CustomItems items = new CustomItems();
 	
 	public static void fill(Location origin, int x, int y, int z) {
 	}
@@ -42,30 +40,32 @@ public class World {
 		}
 		
 		if(validLocation) {
-			Item item = null; 
+			Item item;
 			int r = -255, g = -255, b = -255;
-			int quality = Utils.rand(100) + 1;
-			if(quality <= 70) {
-				item = Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), x + 0.5, y + 1, z + 0.5), items.getWhiteItem());
-				r = 255;
-				g = 255;
-				b = 255;
+			ISpawnableItem spawnableItem = ItemPoolManager.getRandomItem();
+			switch(spawnableItem.getRarity()){
+				case WHITE:
+					r = 255;
+					g = 255;
+					b = 255;
+					break;
+				case GREEN:
+					g = 255;
+					break;
+				case RED:
+					r = 255;
+					g = 0;
+					b = 0;
+					break;
+				case BLUE:
+					r = 0;
+					g = 0;
+					b = 255;
 			}
-			
-			else if (quality >= 71 && quality <= 90) {
-				item = Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), x + 0.5, y + 1, z + 0.5), items.getGreenItem());
-				g = 255;
-			}
-			
-			else if (quality >= 91) {
-				item = Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), x + 0.5, y + 1, z + 0.5), items.getRedItem());
-				r = 255;
-				g = 0;
-				b = 0;
-			}
+			item = Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), x + 0.5, y + 1, z + 0.5),spawnableItem.createItem(null));
 			item.setVelocity(item.getVelocity().setX(0).setY(0).setZ(0));
 			if(showParticles)
-				new Particle((Entity) item, EnumParticle.REDSTONE, 0, 1, 0, r, g, b, 1F, 0, 3000, false).runTaskTimer(Bukkit.getPluginManager().getPlugin("bridgewars"), 0L, 1L);
+				new Particle(item, EnumParticle.REDSTONE, 0, 1, 0, r, g, b, 1F, 0, 3000, false).runTaskTimer(Bukkit.getPluginManager().getPlugin("bridgewars"), 0L, 1L);
 		}
 	}
 }

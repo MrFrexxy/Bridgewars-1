@@ -1,5 +1,6 @@
 package bridgewars;
 
+import bridgewars.item.ItemPoolManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bridgewars.behavior.BuildLimits;
@@ -38,13 +39,6 @@ import bridgewars.game.GameState;
 import bridgewars.game.InstantRespawn;
 import bridgewars.game.Kills;
 import bridgewars.game.Timer;
-import bridgewars.items.BlackHoleThrow;
-import bridgewars.items.BridgeEggThrow;
-import bridgewars.items.FireballLaunch;
-import bridgewars.items.ForceFieldGenerator;
-import bridgewars.items.HomeRunBat;
-import bridgewars.items.PortableDoinkHut;
-import bridgewars.items.SadRoom;
 import bridgewars.menus._MenuInput;
 import bridgewars.messages.DeathMessages;
 import bridgewars.messages.OnJoin;
@@ -55,7 +49,9 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		
+		//initialization
+		new ItemPoolManager(this);
+
 		//behavior
 		new BuildLimits(this);
 		new DisableArmorRemoval(this);
@@ -103,13 +99,13 @@ public class Main extends JavaPlugin {
 		new _MenuInput(this);
 		
 		//items
-		new BlackHoleThrow(this);
-		new BridgeEggThrow(this);
-		new FireballLaunch(this);
-		new PortableDoinkHut(this);
-		new ForceFieldGenerator(this);
-		new HomeRunBat(this);
-		new SadRoom(this);
+		//new BlackHoleThrow(this);
+		//new BridgeEggThrow(this);
+		//new FireballLaunch(this);
+		//new PortableDoinkHut(this);
+		//new ForceFieldGenerator(this);
+		//new HomeRunBat(this);
+		//new SadRoom(this);
 		
 		//messages
 		new DeathMessages(this);
