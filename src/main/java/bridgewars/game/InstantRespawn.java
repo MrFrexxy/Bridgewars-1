@@ -1,6 +1,6 @@
 package bridgewars.game;
 
-import bridgewars.item.ItemPoolManager;
+import bridgewars.utils.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,21 +50,21 @@ public class InstantRespawn implements Listener {
 				p.playSound(p.getLocation(), Sound.HURT_FLESH, 1F, 1F);
 				//base equipment
 				if(!p.getInventory().contains(Material.GOLD_SWORD) && Swords.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("BasicSword").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("BasicSword").createItem(p));
 				if(!p.getInventory().contains(Material.SHEARS) && Shears.getState().isEnabled() && !GigaDrill.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("Shears").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("Shears").createItem(p));
 				if(!p.getInventory().contains(Material.WOOL) && Blocks.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("WoolBlocks").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("WoolBlocks").createItem(p));
 				
 				//bows
 				if(!p.getInventory().contains(Material.BOW) && Bows.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("Bow").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("Bow").createItem(p));
 				if(!p.getInventory().contains(Material.ARROW) && Bows.getState().isEnabled())
 					p.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 				
 				//giga shears
 				if(!p.getInventory().contains(Material.SHEARS) && GigaDrill.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("GigaShears").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("GigaShears").createItem(p));
 				
 				//digwars stuff
 				if(DigWars.getState().isEnabled()) {
@@ -75,17 +75,17 @@ public class InstantRespawn implements Listener {
 						p.getInventory().addItem(new ItemStack(Material.WOOD, 64));
 				}
 				if(!p.getInventory().contains(Material.STONE_AXE) && DigWars.getState().isEnabled())
-					p.getInventory().addItem(ItemPoolManager.getItem("Axe").createItem(p));
+					p.getInventory().addItem(ItemManager.getItem("Axe").createItem(p));
 				
 				//give armor back if it's missing
 				if(p.getInventory().getHelmet() == null)
-					p.getInventory().setHelmet(ItemPoolManager.getItem("BasicHelmet").createItem(p));
+					p.getInventory().setHelmet(ItemManager.getItem("BasicHelmet").createItem(p));
 				if(p.getInventory().getChestplate() == null)
-					p.getInventory().setChestplate(ItemPoolManager.getItem("BasicChestplate").createItem(p));
+					p.getInventory().setChestplate(ItemManager.getItem("BasicChestplate").createItem(p));
 				if(p.getInventory().getLeggings() == null)
-					p.getInventory().setLeggings(ItemPoolManager.getItem("BasicLeggings").createItem(p));
+					p.getInventory().setLeggings(ItemManager.getItem("BasicLeggings").createItem(p));
 				if(p.getInventory().getBoots() == null)
-					p.getInventory().setBoots(ItemPoolManager.getItem("BasicBoots").createItem(p));
+					p.getInventory().setBoots(ItemManager.getItem("BasicBoots").createItem(p));
 				return;
 			}
 		}

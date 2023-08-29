@@ -1,7 +1,7 @@
-package bridgewars.item;
+package bridgewars.items;
 
 import bridgewars.Main;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
 import bridgewars.utils.Utils;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class HomeRunBat implements ISpawnableItem, Listener {
+public class HomeRunBat implements ICustomItem, Listener {
 
     public HomeRunBat(Main plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);

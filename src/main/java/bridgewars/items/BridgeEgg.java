@@ -1,9 +1,9 @@
-package bridgewars.item;
+package bridgewars.items;
 
 import bridgewars.Main;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class BridgeEgg implements ISpawnableItem, Listener {
+public class BridgeEgg implements ICustomItem, Listener {
     public BridgeEgg(Main plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }

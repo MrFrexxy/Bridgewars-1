@@ -1,6 +1,6 @@
 package bridgewars.game;
 
-import bridgewars.item.ItemPoolManager;
+import bridgewars.utils.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -49,19 +49,19 @@ public class Kills implements Listener {
 				if(KillstreakRewards.getState().isEnabled()) {
 					if(k.getLevel() % 3 == 0)
 						if(ks.getThreeStreak(k) == 0)
-							k.getInventory().addItem(ItemPoolManager.getItem("BridgeEgg").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("BridgeEgg").createItem(p));
 						else if(ks.getThreeStreak(k) == 1)
-							k.getInventory().addItem(ItemPoolManager.getItem("PortableDoinkHut").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("PortableDoinkHut").createItem(p));
 					if(k.getLevel() % 5 == 0)
 						if(ks.getFiveStreak(k) == 0)
-							k.getInventory().addItem(ItemPoolManager.getItem("HomeRunBat").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("HomeRunBat").createItem(p));
 						else if(ks.getFiveStreak(k) == 1)
-							k.getInventory().addItem(ItemPoolManager.getItem("Fireball").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("Fireball").createItem(p));
 					if(k.getLevel() % 7 == 0)
 						if(ks.getSevenStreak(k) == 0)
-							k.getInventory().addItem(ItemPoolManager.getItem("LifeforcePotion").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("LifeforcePotion").createItem(p));
 						else if(ks.getSevenStreak(k) == 1)
-							k.getInventory().addItem(ItemPoolManager.getItem("BlackHole").createItem(p));
+							k.getInventory().addItem(ItemManager.getItem("BlackHole").createItem(p));
 				}
 				
 				if(cs.getTime(p) < tl.getLimit() - 15)

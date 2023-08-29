@@ -1,6 +1,6 @@
 package bridgewars.menus;
 
-import bridgewars.item.ItemPoolManager;
+import bridgewars.utils.ItemManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -95,8 +95,8 @@ public class KillstreakEditor {
 			ks.setSevenStreak(p, 1);
 			ItemStack potion = new ItemStack(Material.POTION, 7, (short) 8192);
 			ItemMeta pmeta = potion.getItemMeta();
-			pmeta.setDisplayName(ItemPoolManager.getItem("LifeforcePotion").createItem(null).getItemMeta().getDisplayName());
-			pmeta.setLore(ItemPoolManager.getItem("LifeforcePotion").createItem(null).getItemMeta().getLore());
+			pmeta.setDisplayName(ItemManager.getItem("LifeforcePotion").createItem(null).getItemMeta().getDisplayName());
+			pmeta.setLore(ItemManager.getItem("LifeforcePotion").createItem(null).getItemMeta().getLore());
 			pmeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 			potion.setItemMeta(pmeta);
 			p.getOpenInventory().setItem(14, potion);

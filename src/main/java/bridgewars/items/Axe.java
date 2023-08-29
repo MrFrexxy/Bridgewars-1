@@ -1,13 +1,13 @@
-package bridgewars.item;
+package bridgewars.items;
 
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Axe implements ISpawnableItem {
+public class Axe implements ICustomItem {
     @Override
     public Rarity getRarity() {
         return Rarity.NONE;

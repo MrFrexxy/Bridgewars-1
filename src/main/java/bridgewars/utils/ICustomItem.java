@@ -4,7 +4,7 @@ package bridgewars.utils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public interface ISpawnableItem {
+public interface ICustomItem {
     enum Rarity{
         NONE(0,0,0),
         WHITE(255,255,255),

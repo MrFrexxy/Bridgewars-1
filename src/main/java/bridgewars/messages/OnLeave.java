@@ -1,6 +1,6 @@
 package bridgewars.messages;
 
-import bridgewars.item.SadRoom;
+import bridgewars.items.SadRoom;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import bridgewars.game.GameState;
 
 public class OnLeave implements Listener {
 	
-	private CustomScoreboard cs;
+	private final CustomScoreboard cs;
 	
 	public OnLeave(Main plugin) {
 		Bukkit.getPluginManager().registerEvents(this, plugin);

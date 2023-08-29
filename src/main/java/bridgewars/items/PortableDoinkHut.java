@@ -1,8 +1,8 @@
-package bridgewars.item;
+package bridgewars.items;
 
 import bridgewars.Main;
 import bridgewars.game.CustomScoreboard;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
 import org.bukkit.*;
@@ -18,7 +18,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 
-public class PortableDoinkHut implements ISpawnableItem, Listener {
+public class PortableDoinkHut implements ICustomItem, Listener {
 	
 	private CustomScoreboard cs = new CustomScoreboard();
 	

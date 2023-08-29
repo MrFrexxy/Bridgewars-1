@@ -1,6 +1,6 @@
-package bridgewars.item;
+package bridgewars.items;
 
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
 import org.bukkit.Material;
@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
-public class LifeforcePotion implements ISpawnableItem {
+public class LifeforcePotion implements ICustomItem {
     @Override
     public Rarity getRarity() {
         return Rarity.RED;
@@ -28,7 +28,6 @@ public class LifeforcePotion implements ISpawnableItem {
         PotionMeta effect = (PotionMeta) meta;
         effect.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 600, 0), true);
         effect.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, 4), true);
-        meta = effect;
         lifeforcePotion.setItemMeta(meta);
         lifeforcePotion.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
         ItemBuilder.setName(lifeforcePotion, "&cLifeforce Potion");

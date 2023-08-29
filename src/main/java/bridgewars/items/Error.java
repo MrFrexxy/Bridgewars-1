@@ -1,11 +1,11 @@
-package bridgewars.item;
+package bridgewars.items;
 
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Error implements ISpawnableItem {
+public class Error implements ICustomItem {
     @Override
     public Rarity getRarity() {
         return Rarity.NONE;

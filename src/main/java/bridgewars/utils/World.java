@@ -1,10 +1,8 @@
 package bridgewars.utils;
 
-import bridgewars.item.ItemPoolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -42,7 +40,7 @@ public class World {
 		if(validLocation) {
 			Item item;
 			int r = -255, g = -255, b = -255;
-			ISpawnableItem spawnableItem = ItemPoolManager.getRandomItem();
+			ICustomItem spawnableItem = ItemManager.getRandomItem();
 			switch(spawnableItem.getRarity()){
 				case WHITE:
 					r = 255;

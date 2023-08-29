@@ -1,6 +1,6 @@
 package bridgewars;
 
-import bridgewars.item.ItemPoolManager;
+import bridgewars.utils.ItemManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bridgewars.behavior.BuildLimits;
@@ -50,7 +50,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		//initialization
-		new ItemPoolManager(this);
+		new ItemManager(this);
 
 		//behavior
 		new BuildLimits(this);

@@ -1,9 +1,9 @@
-package bridgewars.item;
+package bridgewars.items;
 
 import bridgewars.Main;
 import bridgewars.game.Game;
 import bridgewars.game.GameState;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SadRoom implements ISpawnableItem, Listener {
+public class SadRoom implements ICustomItem, Listener {
 	
 	private static List<Player> sadRoomed = new ArrayList<>();
 	
@@ -120,8 +120,7 @@ public class SadRoom implements ISpawnableItem, Listener {
 	}
 	
 	public static void removePlayerFromSadRoom(Player p) {
-		if(sadRoomed.contains(p))
-			sadRoomed.remove(p);
+		sadRoomed.remove(p);
 		if(sadRoomed.isEmpty())
 			clearSadRoom();
 	}

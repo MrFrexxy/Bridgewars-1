@@ -1,11 +1,11 @@
-package bridgewars.item;
+package bridgewars.items;
 
 import bridgewars.Main;
 import bridgewars.game.CustomScoreboard;
 import bridgewars.game.GameState;
 import bridgewars.utils.ItemBuilder;
 import bridgewars.utils.Message;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ICustomItem;
 import bridgewars.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-public class Fireball implements ISpawnableItem, Listener {
+public class Fireball implements ICustomItem, Listener {
     private CustomScoreboard cs = new CustomScoreboard();
 
     public Fireball(Main plugin) {

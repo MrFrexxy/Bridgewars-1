@@ -1,7 +1,6 @@
 package bridgewars.commands;
 
-import bridgewars.item.ItemPoolManager;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.utils.ItemManager;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,11 +17,11 @@ import java.util.List;
 
 public class GiveItem implements CommandExecutor, TabCompleter {
 
-	private ArrayList<String> allItems;
+	private final ArrayList<String> allItems;
 	
 	public GiveItem(Main plugin) {
 		plugin.getCommand("giveitem").setExecutor(this);
-		allItems = ItemPoolManager.getItemNames();
+		allItems = ItemManager.getItemNames();
 	}
 	
 	@Override
@@ -46,7 +45,7 @@ public class GiveItem implements CommandExecutor, TabCompleter {
 
 			for(int i = 0; i < allItems.size(); i++){
 				if(args[0].equals(allItems.get(i))){
-					ItemStack itemStack = ItemPoolManager.getItem(i).createItem(p);
+					ItemStack itemStack = ItemManager.getItem(i).createItem(p);
 					itemStack.setAmount(amount);
 					p.getInventory().addItem(itemStack);
 					p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 0.6F, 1.8F);

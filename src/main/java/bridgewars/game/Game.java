@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import bridgewars.item.ItemPoolManager;
-import bridgewars.item.SadRoom;
+import bridgewars.utils.ItemManager;
+import bridgewars.items.SadRoom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -74,7 +74,7 @@ public class Game {
 		if(debugMessages)
 			p.sendMessage(Message.chat("&7Placed spawn platforms"));
 		
-		bridgewars.item.SadRoom.clearSadRoom();
+		bridgewars.items.SadRoom.clearSadRoom();
 		
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			Fly.allowFlight.remove(player);
@@ -359,29 +359,29 @@ public class Game {
 	
 	public static void grantItems(Player p) {
 		p.getInventory().clear();
-		p.getInventory().setHelmet(ItemPoolManager.getItem("BasicHelmet").createItem(p));
-		p.getInventory().setChestplate(ItemPoolManager.getItem("BasicChestplate").createItem(p));
-		p.getInventory().setLeggings(ItemPoolManager.getItem("BasicLeggings").createItem(p));
-		p.getInventory().setBoots(ItemPoolManager.getItem("BasicBoots").createItem(p));
+		p.getInventory().setHelmet(ItemManager.getItem("BasicHelmet").createItem(p));
+		p.getInventory().setChestplate(ItemManager.getItem("BasicChestplate").createItem(p));
+		p.getInventory().setLeggings(ItemManager.getItem("BasicLeggings").createItem(p));
+		p.getInventory().setBoots(ItemManager.getItem("BasicBoots").createItem(p));
 		if(Swords.isState(Swords.ENABLED))
-			p.getInventory().setItem(hotbar.getSwordSlot(p), ItemPoolManager.getItem("BasicSword").createItem(p));
+			p.getInventory().setItem(hotbar.getSwordSlot(p), ItemManager.getItem("BasicSword").createItem(p));
 		if(Shears.isState(Shears.ENABLED) && !GigaDrill.getState().isEnabled())
-			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemPoolManager.getItem("Shears").createItem(p));
+			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemManager.getItem("Shears").createItem(p));
 		if(Blocks.isState(Blocks.ENABLED))
-			p.getInventory().setItem(hotbar.getWoolSlot(p), ItemPoolManager.getItem("WoolBlocks").createItem(p));
+			p.getInventory().setItem(hotbar.getWoolSlot(p), ItemManager.getItem("WoolBlocks").createItem(p));
 		
 		if(GigaDrill.isState(GigaDrill.ENABLED))
-			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemPoolManager.getItem("GigaShears").createItem(p));
+			p.getInventory().setItem(hotbar.getShearsSlot(p), ItemManager.getItem("GigaShears").createItem(p));
 		
 		if(Bows.isState(Bows.ENABLED)) {
-			p.getInventory().addItem(ItemPoolManager.getItem("Bow").createItem(p));
+			p.getInventory().addItem(ItemManager.getItem("Bow").createItem(p));
 			p.getInventory().setItem(9, new ItemStack(Material.ARROW, 1));
 		}
 		if(DigWars.getState().isEnabled()) {
-			p.getInventory().setItem(hotbar.getAxeSlot(p), ItemPoolManager.getItem("Axe").createItem(p));
+			p.getInventory().setItem(hotbar.getAxeSlot(p), ItemManager.getItem("Axe").createItem(p));
 			p.getInventory().setItem(hotbar.getWoodSlot(p), new ItemStack(Material.WOOD, 64));
 		}
-		p.getInventory().addItem(ItemPoolManager.getItem("BridgeEgg").createItem(p));
+		p.getInventory().addItem(ItemManager.getItem("BridgeEgg").createItem(p));
 		p.setGameMode(GameMode.SURVIVAL);
 	}
 }

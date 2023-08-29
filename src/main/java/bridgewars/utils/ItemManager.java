@@ -1,19 +1,18 @@
-package bridgewars.item;
+package bridgewars.utils;
 
 import bridgewars.Main;
-import bridgewars.utils.ISpawnableItem;
+import bridgewars.items.*;
+import bridgewars.items.Error;
 import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.util.*;
 
-public class ItemPoolManager {
-    private Main plugin;
+public class ItemManager {
     private static File config;
-    private static ArrayList<ISpawnableItem> allItems;
+    private static ArrayList<ICustomItem> allItems;
     private static ItemPool activeItems;
-    public ItemPoolManager(Main plugin){
-        this.plugin = plugin;
+    public ItemManager(Main plugin){
         config = new File("./plugins/bridgewars/itempool.ini");
 
         allItems = new ArrayList<>();
@@ -35,16 +34,7 @@ public class ItemPoolManager {
         allItems.add(new GigaShears());
         allItems.add(new Shears());
         allItems.add(new WoolBlocks());
-        allItems.sort(new Comparator<ISpawnableItem>() {
-            @Override
-            public int compare(ISpawnableItem o1, ISpawnableItem o2) {
-                int out = o1.getRarity().compareTo(o2.getRarity());
-                if(out == 0){
-                    out = o1.getClass().getSimpleName().compareTo(o2.getClass().getSimpleName());
-                }
-                return out;
-            }
-        });
+        allItems.sort(Comparator.comparing(ICustomItem::getRarity).thenComparing(o -> o.getClass().getSimpleName()));
         try {
             validateConfig();
         }catch (IOException ioe){
@@ -57,10 +47,10 @@ public class ItemPoolManager {
         private final float redPercent;
         private final float bluePercent;
 
-        ArrayList<ISpawnableItem> blueItems;
-        ArrayList<ISpawnableItem> redItems;
-        ArrayList<ISpawnableItem> greenItems;
-        ArrayList<ISpawnableItem> whiteItems;
+        ArrayList<ICustomItem> blueItems;
+        ArrayList<ICustomItem> redItems;
+        ArrayList<ICustomItem> greenItems;
+        ArrayList<ICustomItem> whiteItems;
         public ItemPool(float greenPercent, float redPercent, float bluePercent){
             this.greenPercent = greenPercent;
             this.redPercent = redPercent;
@@ -71,7 +61,7 @@ public class ItemPoolManager {
             redItems = new ArrayList<>();
             blueItems = new ArrayList<>();
         }
-        public void addItem(ISpawnableItem item){
+        public void addItem(ICustomItem item){
             switch (item.getRarity()){
                 case WHITE:
                     whiteItems.add(item);
@@ -86,13 +76,13 @@ public class ItemPoolManager {
                     blueItems.add(item);
             }
         }
-        private ISpawnableItem getFromGroup(ArrayList<ISpawnableItem> itemGroup){
+        private ICustomItem getFromGroup(ArrayList<ICustomItem> itemGroup){
             if(itemGroup.size() <= 0) { return null; }
             return itemGroup.get((int)(Math.random()*itemGroup.size()));
         }
-        public ISpawnableItem getRandomItem(){
+        public ICustomItem getRandomItem(){
             double val = Math.random();
-            ISpawnableItem out;
+            ICustomItem out;
             if(val < bluePercent){
                 out = getFromGroup(blueItems);
             } else if(val < redPercent){
@@ -111,7 +101,7 @@ public class ItemPoolManager {
         String[] names = br.lines().toArray(String[]::new);
 
         outerLoop:
-        for (ISpawnableItem i : allItems)
+        for (ICustomItem i : allItems)
         {
             String name = i.getClass().getSimpleName();
             for (String n : names
@@ -136,7 +126,7 @@ public class ItemPoolManager {
             while ((line = br.readLine()) != null)
             {
                 if(line.charAt(0) == '1'){
-                    for(ISpawnableItem i : allItems){
+                    for(ICustomItem i : allItems){
                         if(i.getClass().getSimpleName().equals(line.substring(1))){
                             out.addItem(i);
                             continue nextLine;
@@ -153,21 +143,21 @@ public class ItemPoolManager {
     public static void generateItemPool(float greenPercent, float redPercent, float bluePercent){
         activeItems = getActivePool(greenPercent, redPercent, bluePercent);
     }
-    public static ISpawnableItem getRandomItem(){
+    public static ICustomItem getRandomItem(){
         return activeItems.getRandomItem();
     }
     public static ArrayList<String> getItemNames(){
         ArrayList<String> out = new ArrayList<>();
-        for (ISpawnableItem allItem : allItems) {
+        for (ICustomItem allItem : allItems) {
             out.add(allItem.getClass().getSimpleName());
         }
         return out;
     }
-    public static ISpawnableItem getItem(int index){
+    public static ICustomItem getItem(int index){
         return allItems.get(index);
     }
-    public static ISpawnableItem getItem(String name){
-        for (ISpawnableItem i : allItems
+    public static ICustomItem getItem(String name){
+        for (ICustomItem i : allItems
              ) {
             if(i.getClass().getSimpleName().equals(name)){
                 return i;
